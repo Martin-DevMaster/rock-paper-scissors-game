@@ -1,0 +1,97 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+html {
+    font-family: 'Comic Neue', cursive;
+}
+
+body {
+    height: 80vh;
+    text-align: center;
+    display: grid;
+    place-content: center;
+    background-color: black;
+    color: rgb(255, 255, 255);
+    overflow: hidden;
+}
+h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+.button-container {
+    margin-top: 1.5rem;
+}
+button {
+    font-size: 1.5rem;
+    margin: 5px;
+    color: #fff;
+    border: none;
+}
+button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+.button-container button:first-child {
+    background-color: green;
+}
+.button-container button:last-child {
+    background-color: red;
+}
+
+.gameWindow {
+    height: 100%;
+    display: none;
+    position: relative;
+
+}
+#rock, #paper, #scissors  {
+    font-size: 200px;
+    margin: 25px 50px 0 50px;
+    background: transparent;
+}
+#rock {
+    margin-left: 0;
+}
+#scissors {
+    margin-right: 0;
+}
+
+#rock::after {
+    content: 'ROCK';
+    font-size: 50px;
+    position: absolute;
+    bottom: -15%;
+    left: 3%;
+}
+#paper::after {
+    content: 'PAPER';
+    font-size: 50px;
+    position: absolute;
+    bottom: -15%;
+    left: 40%;
+}
+#scissors::after {
+    content: 'SCISSORS';
+    font-size: 50px;
+    position: absolute;
+    bottom: -15%;
+    right: -10%;
+}
+
+
+#rock:hover, #paper:hover, #scissors:hover {
+    opacity: 0.8;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+p {
+    font-size: 50px;
+    margin: 0;
+}

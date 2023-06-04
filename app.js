@@ -1,57 +1,75 @@
-// Making rock,paper scissors game...
-// First I need an input(preferably prompt) for users to say if they choose rock or paper or scissors.
-// I need a function for game and when function is called, the game begins.
-// I need to make the input to take only three strings('rock', 'paper' and 'scissors').
+const container = document.querySelector('.container');
+const gameStart = document.querySelector('.gameWindow');
+const button = document.querySelectorAll('button');
+const choice = document.querySelector('.choice');
+const checkButton = document.querySelector('.button-agree');
+const removeButton = document.querySelector('.button-disagree');
+const playerLiveScore = document.querySelector('.playerScore');
+const computerLiveScore = document.querySelector('.computerScore');
+
 let playerScore = 0;
 let computerScore = 0;
+let winningScore = 5;
 
-function playRound() {
-    for(let i = 0; i < 5; i++) {
-        game()
-    }
-    if(playerScore > computerScore) {
-        return console.log(`You are the winner, with score ${playerScore}. And computer loses with score ${computerScore}`)
-    } else if(playerScore < computerScore){
-        return console.log(`You are loser, with score ${playerScore}. And computer wins with score ${computerScore}`)
-    } else {
-        return console.log('Unfortunately, its tie..... better luck next time!')
+const getComputerChoice = () => {
+    const computerChoices = ['rock', 'paper', 'scissors'];
+    return computerChoices[Math.floor(Math.random() * (computerChoices.length))]
+};
+
+checkButton.addEventListener('click', function() {
+    container.style.display = 'none';
+    gameStart.style.display = 'block';
+    button.forEach((btn) => btn.addEventListener('click', function(e) {
+        computerSelection = getComputerChoice();
+        let playerChoice = e.currentTarget.id
+        if((playerChoice === 'rock' && computerSelection === 'scissors') || 
+           (playerChoice === 'paper' && computerSelection === 'rock')    ||
+           (playerChoice === 'scissors' && computerSelection === 'paper')) {
+             playerScore++
+             playerLiveScore.textContent = playerScore;
+        } else if(playerChoice === computerSelection) {
+            alert("It's TIE, continue...");
+            
+        } else {
+            computerScore++
+            computerLiveScore.textContent = computerScore;
+        }
+        gameOver()
+    }))
+
+})
+
+removeButton.addEventListener('click', function() {
+    container.style.display = 'none';
+    const h1 = document.createElement('h1');
+    h1.innerText = 'You choose to surrender, good riddance!'
+    choice.append(h1)
+});
+
+function gameOver() {
+    if(playerScore === winningScore){
+        gameStart.style.display = 'none';
+        const gameOver = document.createElement('h1');
+        const para = document.createElement('p');
+        gameOver.innerText = `You are the winner with score ${playerScore} and computer lost with score ${computerScore}`
+        para.innerText = 'This page will refresh in 10 Seconds.'
+        para.style.cssText = 'font-size: 30px; color: red;'
+        choice.appendChild(gameOver)
+        choice.appendChild(para)
+        setTimeout(pageRefresh, 10000)
+    } if(computerScore === winningScore) {
+        gameStart.style.display = 'none';
+        const gameOver = document.createElement('h1');
+        const para = document.createElement('p');
+        gameOver.innerText = `You are the loser with score ${playerScore} and computer is winner with score ${computerScore}`
+        para.innerText = 'This page will refresh in 10 Seconds.'
+        para.style.cssText = 'font-size: 30px; color: red;'
+        choice.appendChild(gameOver)
+        choice.appendChild(para)
+        setTimeout(pageRefresh, 10000)
     }
 }
 
-function game(playerSelection, computerSelection) {
-    playerSelection = prompt('Enter your choice');
-    computerSelection = getComputerChoice();
-    if(playerSelection.toUpperCase() === computerSelection.toUpperCase()){
-        return console.log('Its TIE!!!');
-    } else if(playerSelection.toLowerCase() === 'rock' && computerSelection === 'Scissors'){
-        playerScore++
-        return console.log('You win! Rock beats Scissors!');
-    } else if(playerSelection.toLowerCase() === 'rock' && computerSelection === 'Paper'){
-        computerScore++
-        return console.log('You lose! Paper beats rock!');
-    } else if(playerSelection.toLowerCase() === 'paper' && computerSelection === 'Rock'){
-        playerScore++
-        return console.log('You win! Paper beats Rock!');
-    } else if(playerSelection.toLowerCase() === 'paper' && computerSelection === 'Scissors'){
-        computerScore++
-        return console.log('You lose! Scissors beats paper!');
-    } else if(playerSelection.toLowerCase() === 'scissors' && computerSelection === 'Paper'){
-        playerScore++
-        return console.log('You win! Scissors beats Paper!');
-    } else if(playerSelection.toLowerCase() === 'scissors' && computerSelection === 'Rock'){
-        computerScore++
-        return console.log('You lose! Rock beats Scissors!');
-    } else {
-        playerSelection = prompt('Enter valid choice');
-    } 
+const pageRefresh = () => {
+    window.location.reload(true)
 }
-function getComputerChoice() {
-    const computerChoices = {
-        Rock: 'Rock',
-        Paper: 'Paper',
-        Scissors: 'Scissors'
-    }
-    return computerChoices[Object.keys(computerChoices)[Math.floor(Math.random()*Object.keys(computerChoices).length)]];
-}
-
-playRound()
